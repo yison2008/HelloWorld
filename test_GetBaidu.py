@@ -1,29 +1,25 @@
-from selenium import webdriver
-from selenium.webdriver.common.action_chains import ActionChains
 import time
-
+from selenium import webdriver
 from selenium.webdriver.common.by import By
 
 
-class Test_GetBaidu:
-    def test_GetBaidu(self):
-        #获得chrome浏览器驱动
-        driverChrome = webdriver.Chrome( )
-        #打开百度网站
-        driverChrome.get("http://www.baidu.com")
-        time.sleep(1)
-        #浏览器最大化
-        driverChrome.maximize_window()
-        time.sleep(1)
-        #设置浏览器大小
-        #driverChrome.set_window_size(800,600)
-        #time.sleep(1)
-        #刷新浏览器
+class Test_GetBaidu():
+    def setup_method(self, method):
+        self.driverChrome = webdriver.Chrome()
+        self.vars = {}
 
-        #使用超链接text内容定位
-        driverChrome.refresh()
+    def teardown_method(self, method):
+        self.driverChrome.quit()
+
+    def test_GetBaidu(self):
+        self.driverChrome.get("http://www.baidu.com")
+        time.sleep(1)
+        # 浏览器最大化
+        self.driverChrome.maximize_window()
+        time.sleep(1)
+
+        # 使用超链接text内容定位
+        self.driverChrome.refresh()
+        time.sleep(1)
+        self.driverChrome.find_element(By.LINK_TEXT, "新闻").click()
         time.sleep(2)
-        link_textElement = driverChrome.find_element(By.LINK_TEXT, "新闻").click()
-        time.sleep(3)
-        driverChrome.quit()
-        assert "ok"=="ok"
